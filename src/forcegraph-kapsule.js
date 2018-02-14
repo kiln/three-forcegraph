@@ -93,7 +93,8 @@ export default Kapsule({
     cooldownTicks: { default: Infinity },
     cooldownTime: { default: 15000 }, // ms
     onLoading: { default: () => {}, triggerUpdate: false },
-    onFinishLoading: { default: () => {}, triggerUpdate: false }
+    onFinishLoading: { default: () => {}, triggerUpdate: false },
+    rescale: { default: 1 } // adjust scale of entire graph
   },
 
   aliases: {
@@ -290,9 +291,9 @@ export default Kapsule({
 
         const pos = isD3Sim ? node : layout.getNodePosition(node[state.nodeId]);
 
-        obj.position.x = pos.x;
-        obj.position.y = pos.y || 0;
-        obj.position.z = pos.z || 0;
+        obj.position.x = (pos.x) * state.rescale;
+        obj.position.y = (pos.y || 0) * state.rescale;
+        obj.position.z = (pos.z || 0) * state.rescale;
       });
 
       // Update links position
